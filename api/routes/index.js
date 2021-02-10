@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const controller = require('../controllers');
+const middlewares = require('../middlewares')
+
 
 // Default route
 router.get('/', (req, res) => {
@@ -7,12 +9,12 @@ router.get('/', (req, res) => {
 });
 
 // Login route
-router.post('/login', (req, res) => {
+router.post('/login', middlewares.isBodyEmpty, (req, res) => {
     controller.login(req, res);
 });
 
 // Signup route
-router.post('/signup', (req, res ) => {
+router.post('/signup', middlewares.isBodyEmpty, (req, res ) => {
     controller.signup(req, res);
 });
 

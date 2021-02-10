@@ -4,15 +4,21 @@ const Schema = mongoose.Schema;
 
 // User schema
 const UserSchema = new Schema({
-    username: String,
-    password: String,
+    username: {
+        type: String,
+        required: [true, 'username is required']
+    },
+    password: {
+        type: String,
+        required: [true, 'password is required']
+    },
     email: {
         type: String,
-        default: 'default@mail.com'
-    }
+        required: [true, 'email is required']
+    },
 }, { timestamps: true });
 
 
 module.exports = {
-    User: mongoose.model('User', UserSchema)
+    User: mongoose.model('User', UserSchema, 'users')
 }
