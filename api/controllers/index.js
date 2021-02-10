@@ -40,7 +40,30 @@ const login = (req, res) => {
 
 // Signup
 const signup = (req, res) => {
+    userExists({ email: req.body.email, username: req.body.username }, (err, user) => {
+        if (user != null)
+            return res.status(409).json({ message: 'user already exists' });
 
+        // Hash password
+        bcrypt.hash(req.body.password, 10)
+            .then((pswdHash) => {
+                // Create new user
+                const newUser = Models.User({   
+                    email: req.body.email,
+                    username: req.body.username,
+                    password: pswdHash
+                });
+                // Insert it in db
+                newUser.save((err2, savedUser) => {
+                    if (err2)
+                        return res.status(500).json({ message: err2 });
+                    res.status(201).json({
+                        message: 'user successfully created',
+                        inserted_id: savedUser._id
+                    });
+                });
+            });
+    });
 }
 
 // Logout
