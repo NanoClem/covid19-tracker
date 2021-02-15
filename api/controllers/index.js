@@ -4,7 +4,7 @@ require('dotenv').config();
 
 
 // Check if a user exists
-const userExists = (filter, cback) => {
+const findUser = (filter, cback) => {
     Models.User.findOne(filter)
         .exec((err, user) => {
             if (err) throw err;
@@ -16,16 +16,24 @@ const userExists = (filter, cback) => {
 }
 
 
-
-// Default
+/**
+ * Default
+ * @param {*} req 
+ * @param {*} res 
+ */
 const welcome = (req, res) => {
     res.send({ message: 'Welcome !' });
 }
 
-// Login
+
+/**
+ * User Login
+ * @param {*} req 
+ * @param {*} res 
+ */
 const login = (req, res) => {
-    userExists({ username: req.body.username }, (err, user) => {
-        if (user == null) 
+    findUser({ username: req.body.username }, (err, user) => {
+        if (user == null)
             return res.status(404).json({ error: err });
         // hash password
         bcrypt.compare(req.body.password, user.password)
@@ -38,9 +46,14 @@ const login = (req, res) => {
     });
 }
 
-// Signup
+
+/**
+ * User Signup
+ * @param {*} req 
+ * @param {*} res 
+ */
 const signup = (req, res) => {
-    userExists({ email: req.body.email, username: req.body.username }, (err, user) => {
+    findUser({ email: req.body.email, username: req.body.username }, (err, user) => {
         if (user != null)
             return res.status(409).json({ message: 'user already exists' });
 
@@ -48,7 +61,7 @@ const signup = (req, res) => {
         bcrypt.hash(req.body.password, 10)
             .then((pswdHash) => {
                 // Create new user
-                const newUser = Models.User({   
+                const newUser = Models.User({
                     email: req.body.email,
                     username: req.body.username,
                     password: pswdHash
@@ -66,7 +79,12 @@ const signup = (req, res) => {
     });
 }
 
-// Logout
+
+/**
+ * User Logout
+ * @param {*} req 
+ * @param {*} res 
+ */
 const logout = (req, res) => {
 
 }
