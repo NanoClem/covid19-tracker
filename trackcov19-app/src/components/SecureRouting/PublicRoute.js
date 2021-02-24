@@ -11,7 +11,7 @@ export default function PublicRoute({ component: Component, restricted, ...rest 
             render={props => (
                 isLogged() && restricted ? 
                     <Redirect to='/profile' /> :
-                    <Component {...props} /> 
+                    <Component {...props} {...rest} /> 
             )} 
         />
     );
