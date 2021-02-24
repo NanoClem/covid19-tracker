@@ -10,7 +10,7 @@ import Login from '../Login/Login';
 import './App.css';
 
 
-function App() {
+export default function App() {
 
   return (
     <Router>
@@ -23,8 +23,5 @@ function App() {
         </Switch>
       </div>
     </Router>
-
   );
 }
-
-export default App;
