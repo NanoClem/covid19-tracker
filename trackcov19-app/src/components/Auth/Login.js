@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Login.css';
 
 
-export default function Login() {
+export default function Login({ setLoggedIn }) {
 
     // STATE AND SETTERS
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
 
     /**
      * Handle errors for api requests
@@ -48,6 +50,8 @@ export default function Login() {
             .then(data => {
                 if (data) {
                     sessionStorage.setItem('token', JSON.stringify(data));   // set token in session
+                    setLoggedIn(true);
+                    history.push('/profile');
                 }
             });
     }
