@@ -1,8 +1,10 @@
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
+import PrivateRoute from '../SecureRouting/PrivateRoute';
+import PublicRoute from '../SecureRouting/PublicRoute';
 import Navbar from '../Navbar/Navbar';
 import Home from '../Home/Home';
-import Dataviz from '../Dataviz/Dataviz';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import './App.css';
@@ -15,14 +17,13 @@ function App() {
       <div className="App">
         <Navbar />
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/dataviz" component={Dataviz} />
-          <Route path="/profile" component={Profile} />
-          <Route pah="/login" component={Login} />
+          <PublicRoute exact path="/" restricted={false} component={Home}  />
+          <PublicRoute path="/login" restricted={true} component={Login} />
+          <PrivateRoute path="/profile" component={Profile} />
         </Switch>
       </div>
     </Router>
-    
+
   );
 }
 
