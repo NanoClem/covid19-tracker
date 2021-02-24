@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import './Navbar.css';
 
-class Navbar extends Component {
 
-    render() {
+export default function Navbar() {
+
         return(
             <nav>
                 <h3>Logo</h3>
@@ -12,16 +12,13 @@ class Navbar extends Component {
                     <Link className="link" to='/'>
                         <li>Home</li>
                     </Link>
-                    <Link className="link" to="/dataviz">
-                        <li>Dataviz</li>
-                    </Link>
                     <Link className="link" to="/profile">
                         <li>Profile</li>
+                    </Link>
+                    <Link className="link" to="/login">
+                        <li>Login</li>
                     </Link>
                 </ul>
             </nav>
         );
     }
-}
-
-export default Navbar;
