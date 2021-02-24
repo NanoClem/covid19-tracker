@@ -10,8 +10,10 @@ const findUser = (filter, cback) => {
             if (err) throw err;
             if (user != null)       // user has been found
                 cback(err, user);
-            else
+            else {
                 cback('user not found', null);
+            }
+
         });
 }
 
@@ -33,13 +35,13 @@ const welcome = (req, res) => {
  */
 const login = (req, res) => {
     findUser({ username: req.body.username }, (err, user) => {
-        if (user == null)
-            return res.status(404).json({ error: err });
+        if (user == null || err)
+            return res.status(401).json({ message: 'login failed' });
         // hash password
         bcrypt.compare(req.body.password, user.password)
             .then((match) => {
                 if (match)
-                    res.status(200).json({ message: 'successfully logged in' });
+                    res.status(200).json({ token: 'testToken' });
                 else
                     res.status(401).json({ message: 'login failed' });
             });
